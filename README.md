@@ -40,4 +40,4 @@
 
 `127.0.0.1 molgenis-blue`
 
-docker run --name nginx -v /Users/connor/Code/docker-molgenis/nginx/myconf.conf:/etc/nginx/nginx.conf:ro -p 80:80 -p 443:443 -d --network mol-net nginx
+`docker run --name nginx -v /Users/connor/Code/docker-molgenis/nginx/myconf.conf:/etc/nginx/nginx.conf:ro -v /Users/connor/Code/docker-molgenis/nginx/certs:/etc/nginx/ssl -p 80:80 -p 443:443 -d --network mol-net nginx`
