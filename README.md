@@ -54,7 +54,10 @@ expose 80 ( for http )and 443 for https (replace path with your own path)
 
 `docker run --name nginx -v /Users/connorstroomberg/Code/docker-molgenis/nginx/myconf.conf:/etc/nginx/nginx.conf:ro -v /Users/connorstroomberg/Code/docker-molgenis/nginx/certs:/etc/nginx/ssl -p 80:80 -p 443:443 -d nginx`
 
+* Add the nginx to both networks ( red and blue ) so the proxy can see both molgenis instances
+
 `docker network connect mol-net-blue nginx`
+
 `docker network connect mol-net-blue nginx`
 
 `docker restart nginx`
