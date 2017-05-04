@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 
 services:
   nginx:
@@ -6,58 +6,64 @@ services:
     depends_on:
         - molgenis-red
         - molgenis-blue
-    labels:
-      org.molgenis.description: "A proxy"
+    command: ln -s /run/secrets/myconf.conf /etc/nginx/nginx.conf
+    secrets:
+      - nginx_conf
+      - nginx_certs
     ports:
       - "80:80"
       - "443:443"
-    volumes:
-      - nginx-config-volume:/etc/nginx/nginx.conf:ro
-      - certs-volume:/etc/nginx/ssl
     networks:
-      - mol-net-red
-      - mol-net-blue
+      - red
+      - blue
+
 
   molgenis-red:
     build: .
+    container_name: molgenis-red
     depends_on:
         - mol-postgres-red
     networks:
-      - mol-net-red
+      - red
     volumes:
-      - /Users/connor/Code/docker-molgenis/molgenis-blue/molgenis-server.properties:/usr/local/tomcat/molgenis-server.properties
+      - /Users/connorstroomberg/Code/docker-molgenis/molgenis-red/molgenis-server.properties:/usr/local/tomcat/molgenis-server.properties
 
   molgenis-blue:
     build: .
+    container_name: molgenis-blue
     depends_on:
         - mol-postgres-blue
     networks:
-      - mol-net-blue
+      - blue
     volumes:
-      - /Users/connor/Code/docker-molgenis/molgenis-red/molgenis-server.properties:/usr/local/tomcat/molgenis-server.properties
+      - /Users/connorstroomberg/Code/docker-molgenis/molgenis-blue/molgenis-server.properties:/usr/local/tomcat/molgenis-server.properties
 
   mol-postgres-red:
     image: postgres
+    container_name: mol-postgres-red
     environment:
       - POSTGRES_USER=molgenis
       - POSTGRES_PASSWORD=molgenis
       - POSTGRES_DB=molgenis
     networks:
-      - mol-net-red
+      - red
 
   mol-postgres-blue:
     image: postgres
+    container_name: mol-postgres-blue
     environment:
       - POSTGRES_USER=molgenis
       - POSTGRES_PASSWORD=molgenis
       - POSTGRES_DB=molgenis
     networks:
-      - mol-net-blue
+      - blue
 
-volumes:
-  nginx-config-volume: /Users/connor/Code/docker-molgenis/nginx/myconf.conf
-  certs-volume: /Users/connor/Code/docker-molgenis/nginx/certs
+secrets:
+  nginx_conf:
+    file: ./nginx/myconf.conf
+  nginx_certs:
+    file: ./nginx/certs
 
 networks:
-  mol-net-red:
-  mol-net-blue:
+  red:
+  blue:
