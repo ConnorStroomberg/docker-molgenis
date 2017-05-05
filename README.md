@@ -14,9 +14,9 @@
 
 ### Start a (default) postgres container on each of the networks
 
-`docker run -e POSTGRES_USER=molgenis -e POSTGRES_PASSWORD=molgenis -e POSTGRES_DB=molgenis -d --name database-blue --network blue postgres`
+`docker run -e POSTGRES_USER=molgenis -e POSTGRES_PASSWORD=molgenis -e POSTGRES_DB=molgenis -d --name database-blue -v /var/lib/postgresql/data --network blue postgres`
 
-`docker run -e POSTGRES_USER=molgenis -e POSTGRES_PASSWORD=molgenis -e POSTGRES_DB=molgenis -d --name database-red --network red postgres`
+`docker run -e POSTGRES_USER=molgenis -e POSTGRES_PASSWORD=molgenis -e POSTGRES_DB=molgenis -d --name database-red -v /var/lib/postgresql/data --network red postgres`
 
 
 ### Start the molgenis apps
