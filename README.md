@@ -29,18 +29,18 @@
 optionaly remove container: `docker rm -f molgenis-blue`
 optionaly remove container: `docker rm -f molgenis-red`
 
-optionaly remove image: `docker image rm mol/tomcat`
+optionaly remove image: `docker image rm molgenis/app:4.0.0`
 
-`docker build --no-cache -t mol/tomcat . `
+`docker build --no-cache -t molgenis/app:4.0.0 . `
 
 * View the images
 `docker images`
 
 * Start a molgenis on the user defined network and use the postgres container name in the db connection string  (replace path with your own path)
 
-`docker run -v ~/Code/docker-molgenis/molgenis-blue/molgenis-server.properties:/usr/local/tomcat/molgenis-server.properties --network mol-net-blue --name molgenis-blue -d mol/tomcat`
+`docker run -v ~/Code/docker-molgenis/molgenis-blue/molgenis-server.properties:/usr/local/tomcat/molgenis-server.properties --network mol-net-blue --name molgenis-blue -d molgenis/app:4.0.0`
 
-`docker run -v ~/Code/docker-molgenis/molgenis-red/molgenis-server.properties:/usr/local/tomcat/molgenis-server.properties --network mol-net-red --name molgenis-red -d mol/tomcat`
+`docker run -v ~/Code/docker-molgenis/molgenis-red/molgenis-server.properties:/usr/local/tomcat/molgenis-server.properties --network mol-net-red --name molgenis-red -d molgenis/app:4.0.0`
 
 
 * For demo only on mac edit /etc/hosts file to loop server-name to localhost
