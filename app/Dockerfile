@@ -3,6 +3,13 @@ FROM tomcat:7.0-jre8-alpine
 # Write tomcat settings to setenv.sh
 RUN echo 'CATALINA_OPTS="-Xmx2g -Dmolgenis.home=/usr/local/tomcat/"' > /usr/local/tomcat/bin/setenv.sh
 
+#Write molgenis seetings file based on env
+RUN echo $'user.password="$USER_PASS" \n\
+admin.password="$ADMIN_PASS" \n\
+db_uri="$DB_URI" \n\
+db_password="$DB_PASSWORD" \n\
+db_user="$DB_USER"' > /usr/local/tomcat/molgenis-server.properties
+
 # Remove all (default) app from tomcat
 RUN rm -fr $CATALINA_HOME/webapps/*
 

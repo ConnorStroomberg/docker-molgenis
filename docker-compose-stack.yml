@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+
+  molgenis:
+    image: molgenis/app:4.0.0
+    environment:
+      - USER_PASS=admin
+      - ADMIN_PASS=admin
+      - DB_URI=db_uri=jdbc\:postgresql\://$database/molgenis?reWriteBatchedInserts\=true&autosave\=CONSERVATIVE
+      - DB_PASSWORD=molgenis
+      - DB_USER=molgenis
+    depends_on:
+          - database
+    networks:
+        - app-network
+
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_USER=molgenis
+      - POSTGRES_PASSWORD=molgenis
+      - POSTGRES_DB=molgenis
+    networks:
+      - app-network
+
+networks:
+  app-network:
